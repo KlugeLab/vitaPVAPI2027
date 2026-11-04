@@ -149,7 +149,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
@@ -158,3 +157,15 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Sincronización: HTTPS obligatorio fuera de un laboratorio con DEBUG.
+VITA_CENTRAL_SYNC_URL = env('VITA_CENTRAL_SYNC_URL', default='https://192.168.1.5/api/v1/sync/')
+VITA_INSTALACION_UUID = uuid.UUID(env('VITA_INSTALACION_UUID'))
+VITA_SYNC_TOKEN = env('VITA_SYNC_TOKEN')
+VITA_SYNC_CA_BUNDLE = env('VITA_SYNC_CA_BUNDLE', default='')
+VITA_SYNC_ALLOW_HTTP_DEV = env.bool('VITA_SYNC_ALLOW_HTTP_DEV', default=False)
+
+AUTHENTICATION_BACKENDS = [
+    "apps.sync_sucursal.auth_backend.SucursalAuthBackend",
+]
+

@@ -14,5 +14,7 @@ staticfiles/
 media/
 *.log
 
+*.sqlite3
+
 .vscode/
 .idea/

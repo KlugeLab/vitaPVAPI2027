@@ -1,0 +1,26 @@
+# Detectar automáticamente los archivos de texto
+* text=auto
+
+# Archivos Python
+*.py text eol=lf
+
+# Archivos de Linux
+*.sh text eol=lf
+
+# Archivos de configuración
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+# Scripts de Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Archivos binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.zip binary

@@ -1,0 +1,11 @@
+[Unit]
+Description=Vita Suite - sincronización periódica de identidad
+
+[Timer]
+OnBootSec=45s
+OnUnitInactiveSec=1min
+Unit=vita-sync-identidad.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

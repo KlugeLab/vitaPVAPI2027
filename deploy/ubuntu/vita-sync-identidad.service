@@ -1,0 +1,14 @@
+[Unit]
+Description=Vita Suite - Sincronización de identidad de sucursal
+After=network.target
+
+[Service]
+Type=oneshot
+User=vita
+Group=vita
+WorkingDirectory=/opt/vitasuite/SSucursalAPI
+ExecStart=/opt/vitasuite/SSucursalAPI/.venv/bin/python manage.py sincronizar_identidad
+StandardOutput=journal
+StandardError=journal
+NoNewPrivileges=yes
+PrivateTmp=yes
