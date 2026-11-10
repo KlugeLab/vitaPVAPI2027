@@ -66,10 +66,18 @@ def _empleado(datos):
 def _sucursal(datos, sucursal_id):
     if _uuid(datos['uuid']) != sucursal_id:
         raise ErrorSincronizacion('Intento de aplicar información de otra sucursal.')
-    obj, _ = Sucursal.objects.update_or_create(
-        pk=sucursal_id,
-        defaults={'codigo': datos['codigo'], 'nombre': datos['nombre'], 'activa': bool(datos['activa'])}
-    )
+    version = int(datos.get('version', 1))
+    anterior = Sucursal.objects.filter(pk=sucursal_id).first()
+    if anterior and anterior.version > version:
+        return anterior  # No degradar snapshot reciente con un evento atrasado.
+    campos = ('tipo','estado','municipio','codigo_postal','colonia','calle',
+              'numero_exterior','numero_interior','domicilio_fiscal','rfc','correo','telefono')
+    defaults = {'codigo': datos['codigo'], 'nombre': datos['nombre'],
+                'activa': bool(datos['activa']), 'version': version}
+    for campo in campos:
+        if campo in datos:
+            defaults[campo] = datos[campo] or ''
+    obj, _ = Sucursal.objects.update_or_create(pk=sucursal_id, defaults=defaults)
     return obj
 
 
